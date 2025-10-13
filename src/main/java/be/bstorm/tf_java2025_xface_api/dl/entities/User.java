@@ -52,6 +52,14 @@ public class User extends BaseEntityNotGenerated<UUID> implements UserDetails {
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     private Set<Post> rePosts = new HashSet<>();
 
+    public User(String email, String password, String firstName, String lastName, LocalDate birthDate) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+    }
+
     public Set<User> getFriends() {
         return Set.copyOf(friends);
     }

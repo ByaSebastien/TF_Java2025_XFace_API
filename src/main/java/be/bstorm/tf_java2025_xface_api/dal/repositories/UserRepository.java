@@ -11,6 +11,6 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
 
-//    @Query("select u from User u where u.email ilike :email")
     Optional<User> findByEmail(String email);
+    boolean existsByEmail(String email);
 }

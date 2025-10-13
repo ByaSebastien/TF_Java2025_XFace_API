@@ -2,22 +2,45 @@ package be.bstorm.tf_java2025_xface_api.bll.services.security.impls;
 
 import be.bstorm.tf_java2025_xface_api.bll.services.security.AuthService;
 import be.bstorm.tf_java2025_xface_api.dal.repositories.UserRepository;
+import be.bstorm.tf_java2025_xface_api.dl.entities.User;
+import be.bstorm.tf_java2025_xface_api.dl.enums.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService, UserDetailsService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email).orElseThrow(
                 () -> new UsernameNotFoundException("User not found")
         );
+    }
+
+    @Override
+    public void register(User user) {
+
+        if(userRepository.existsByEmail(user.getEmail())) {
+            throw new UsernameNotFoundException("Email already in use");
+        }
+
+        user.setId(UUID.randomUUID());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Set.of(UserRole.USER));
+
+        // Todo handle image
+
+        userRepository.save(user);
     }
 }
