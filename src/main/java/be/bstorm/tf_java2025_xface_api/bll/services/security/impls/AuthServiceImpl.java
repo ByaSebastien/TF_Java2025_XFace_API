@@ -5,6 +5,7 @@ import be.bstorm.tf_java2025_xface_api.dal.repositories.UserRepository;
 import be.bstorm.tf_java2025_xface_api.dl.entities.User;
 import be.bstorm.tf_java2025_xface_api.dl.enums.UserRole;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -42,5 +43,17 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         // Todo handle image
 
         userRepository.save(user);
+    }
+
+    @Override
+    public User login(String email, String password) {
+
+        User user = userRepository.findByEmail(email).orElseThrow();
+
+        if(!passwordEncoder.matches(password, user.getPassword())) {
+            throw new BadCredentialsException("Incorrect password");
+        }
+
+        return user;
     }
 }
