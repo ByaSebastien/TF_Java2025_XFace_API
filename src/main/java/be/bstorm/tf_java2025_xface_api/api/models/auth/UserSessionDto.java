@@ -9,11 +9,10 @@ import java.util.UUID;
 public record UserSessionDto(
         UUID id,
         String firstName,
-        String lastName,
         Set<UserRole> roles
 ) {
 
     public static UserSessionDto fromEntity(User u){
-        return new UserSessionDto(u.getId(), u.getFirstName(), u.getLastName(), u.getRoles());
+        return new UserSessionDto(u.getId(), u.getFirstName(), u.getRoles());
     }
 }
