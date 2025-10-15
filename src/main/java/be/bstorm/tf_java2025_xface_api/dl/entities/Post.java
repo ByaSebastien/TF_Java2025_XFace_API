@@ -26,10 +26,15 @@ public class Post extends BaseEntityGenerated<Long> {
 
     @Getter @Setter
     @CollectionTable
-    // todo how to handle list multipartfile
     private Set<String> images = new HashSet<>();
 
     @Getter @Setter
     @CollectionTable
     private Set<String> tags = new HashSet<>();
+
+    public Post(String title, String content, Set<String> tags) {
+        this.title = title;
+        this.content = content;
+        this.tags = tags;
+    }
 }

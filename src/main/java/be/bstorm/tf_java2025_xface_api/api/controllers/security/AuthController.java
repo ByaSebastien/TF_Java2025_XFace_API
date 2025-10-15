@@ -22,8 +22,8 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> register(
-            @RequestPart("form") RegisterForm form,
-            @RequestPart(name = "image") MultipartFile image
+            @Valid @RequestPart("form") RegisterForm form,
+            @RequestPart(name = "image", required = false) MultipartFile image
             ) {
 
         authService.register(form.ToEntity(), image);

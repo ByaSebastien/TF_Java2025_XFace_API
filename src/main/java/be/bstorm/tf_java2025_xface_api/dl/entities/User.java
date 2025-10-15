@@ -60,6 +60,12 @@ public class User extends BaseEntityNotGenerated<UUID> implements UserDetails {
         this.birthDate = birthDate;
     }
 
+    public User(UUID uuid, String email, String password, String firstName, String lastName, LocalDate birthDate, Set<UserRole> roles) {
+        this(email, password, firstName, lastName, birthDate);
+        setId(uuid);
+        this.roles = roles;
+    }
+
     public Set<User> getFriends() {
         return Set.copyOf(friends);
     }
