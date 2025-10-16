@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false) @ToString
 @MappedSuperclass
-public abstract class BaseEntityGenerated<T> {
+public abstract class BaseEntityGenerated<T> extends  BaseEntity {
 
     @Id
     @GeneratedValue

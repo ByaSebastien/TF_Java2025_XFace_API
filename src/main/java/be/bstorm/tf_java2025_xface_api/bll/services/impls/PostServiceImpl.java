@@ -1,4 +1,4 @@
-package be.bstorm.tf_java2025_xface_api.bll.impls;
+package be.bstorm.tf_java2025_xface_api.bll.services.impls;
 
 import be.bstorm.tf_java2025_xface_api.bll.services.PostService;
 import be.bstorm.tf_java2025_xface_api.dal.repositories.PostRepository;
@@ -6,6 +6,8 @@ import be.bstorm.tf_java2025_xface_api.dl.entities.Post;
 import be.bstorm.tf_java2025_xface_api.il.utils.ImageUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,5 +35,10 @@ public class PostServiceImpl implements PostService {
         }
 
         postRepository.save(post);
+    }
+
+    @Override
+    public Page<Post> findAllPosts(Pageable pageable) {
+        return postRepository.findPostsWithOwner(pageable);
     }
 }
