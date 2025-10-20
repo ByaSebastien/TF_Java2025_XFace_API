@@ -39,7 +39,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
             throw new UsernameNotFoundException("Email already in use");
         }
 
-        if(!image.isEmpty()) {
+        if(image != null && !image.isEmpty()) {
             String fileName = imageUtil.save(image);
             user.setImage(fileName);
         }

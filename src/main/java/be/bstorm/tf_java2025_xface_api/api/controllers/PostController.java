@@ -2,7 +2,7 @@ package be.bstorm.tf_java2025_xface_api.api.controllers;
 
 import be.bstorm.tf_java2025_xface_api.api.models.common.PageDto;
 import be.bstorm.tf_java2025_xface_api.api.models.post.PostForm;
-import be.bstorm.tf_java2025_xface_api.api.models.post.PostIndexDto;
+import be.bstorm.tf_java2025_xface_api.api.models.post.PostDto;
 import be.bstorm.tf_java2025_xface_api.bll.services.PostService;
 import be.bstorm.tf_java2025_xface_api.dl.entities.Post;
 import be.bstorm.tf_java2025_xface_api.dl.entities.User;
@@ -26,7 +26,7 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping
-    public ResponseEntity<PageDto<PostIndexDto>> getPosts(
+    public ResponseEntity<PageDto<PostDto>> getPosts(
         @RequestParam(name = "page",defaultValue = "0", required = false) int page,
         @RequestParam(name = "size",defaultValue = "10", required = false) int size,
         @RequestParam(name = "sort1",defaultValue = "createdAt", required = false) String sort1,
@@ -36,8 +36,8 @@ public class PostController {
 
         Page<Post> result = postService.findAllPosts(pageable);
 
-        PageDto<PostIndexDto> dto = new PageDto<>(
-                result.getContent().stream().map(PostIndexDto::fromEntity).toList(),
+        PageDto<PostDto> dto = new PageDto<>(
+                result.getContent().stream().map(PostDto::fromEntity).toList(),
                 result.getNumber(),
                 result.getTotalPages(),
                 result.getNumberOfElements()

@@ -41,4 +41,6 @@ public class PostServiceImpl implements PostService {
     public Page<Post> findAllPosts(Pageable pageable) {
         return postRepository.findPostsWithOwner(pageable);
     }
+
+    
 }
