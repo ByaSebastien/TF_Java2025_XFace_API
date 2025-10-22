@@ -42,4 +42,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
             UUID currentUserId,
             Pageable pageable
     );
+
+    @Query("select u from User u join fetch u.friends where u.id = :userId")
+    Optional<User> findUserWithFriendsByUserId(UUID userId);
 }
