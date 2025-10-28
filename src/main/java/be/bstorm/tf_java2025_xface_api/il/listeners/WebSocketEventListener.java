@@ -1,5 +1,6 @@
 package be.bstorm.tf_java2025_xface_api.il.listeners;
 
+import be.bstorm.tf_java2025_xface_api.bll.services.PresenceEvent;
 import be.bstorm.tf_java2025_xface_api.bll.services.PresenceService;
 import be.bstorm.tf_java2025_xface_api.dal.repositories.UserRepository;
 import be.bstorm.tf_java2025_xface_api.dl.entities.User;
@@ -39,7 +40,7 @@ public class WebSocketEventListener {
         userRepository.findUserWithFriendsByUserId(userId).orElseThrow().getFriends().forEach(
             (friend) ->
                 messagingTemplate.convertAndSendToUser(
-                        friend.getEmail(), "/queue/presence", Map.of("userId", userId, "online", true)
+                        friend.getEmail(), "/queue/presence", new PresenceEvent(userId, true)
                 )
         );
     }
@@ -61,7 +62,7 @@ public class WebSocketEventListener {
             userRepository.findUserWithFriendsByUserId(userId).orElseThrow().getFriends().forEach(
                 (friend) ->
                     messagingTemplate.convertAndSendToUser(
-                            friend.getEmail(), "/queue/presence", Map.of("userId", userId, "online", false)
+                            friend.getEmail(), "/queue/presence", new PresenceEvent(userId, false)
                     )
             );
         }

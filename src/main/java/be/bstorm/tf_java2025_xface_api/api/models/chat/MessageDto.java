@@ -10,7 +10,8 @@ public record MessageDto(
         UUID conversationId,
         UUID senderId,
         String senderName,
-        LocalDateTime sendAt
+        String content,
+        LocalDateTime sentAt
 ) {
 
     public static MessageDto fromMessage(Message m){
@@ -19,6 +20,7 @@ public record MessageDto(
                 m.getConversation().getId(),
                 m.getSender().getId(),
                 m.getSender().getFirstName(),
+                m.getContent(),
                 m.getCreatedAt()
         );
     }

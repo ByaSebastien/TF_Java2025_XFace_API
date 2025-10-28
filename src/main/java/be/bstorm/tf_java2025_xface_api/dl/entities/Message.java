@@ -13,7 +13,6 @@ public class Message extends BaseEntityGenerated<Long> {
 
     @Getter @Setter
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @ToString.Exclude
     @JsonIgnore
     private Conversation conversation;
 
