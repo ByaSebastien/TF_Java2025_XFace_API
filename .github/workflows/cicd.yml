@@ -28,5 +28,5 @@ jobs:
           host: khunly.be
           port: 22 
           username: debian 
-          command: 'echo 42'
-          # privateKey: ${{ secrets.SSH_KEY }}
+          privateKey: ${{ secrets.SSH_KEY }}
+          command: 'docker pull byasebastien/testcicd'
